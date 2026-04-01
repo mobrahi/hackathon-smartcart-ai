@@ -1,0 +1,46 @@
+# --- Standard Python & IDE ---
+__pycache__/
+*.py[cod]
+.venv/ venv/ .env/ ENV/
+.idea/
+.vscode/
+*.egg-info/
+dist/
+build/
+.ipynb_checkpoints
+
+# --- Data & Models ---
+data/
+raw/
+processed/
+models/
+*.pkl
+*.joblib
+*.h5
+*.pth
+*.pt
+*.onnx
+
+# --- Logs & Outputs ---
+logs/
+tb_logs/
+mlruns/
+results/
+outputs/
+*.csv
+*.json
+
+# --- Credentials & Secrets ---
+.env*
+*.key
+credentials/
+
+# General
+.DS_Store
+__MACOSX/
+.AppleDouble
+.LSOverride
+Icon[]
+
+# Thumbnails
+._*
