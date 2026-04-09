@@ -114,35 +114,24 @@ col_left, col_right = st.columns([2, 1])
 
 # --- LEFT COLUMN: BEHAVIOR TIMELINE ---
 with col_left:
-    st.subheader("🕒 User Behavior Timeline (Session-Based)")
+    st.subheader("🕒 User Behavior Timeline")
     
-    # 1. PREPARE THE DATA (Matching the requested logic)
-    # We group by InvoiceNo to treat each purchase as a "Session"
-    user_sessions = user_data.groupby(['InvoiceNo', 'InvoiceDate']).agg(
-        Items_In_Cart=('Quantity', 'sum'),     # Total items in that specific cart
-        Total_Spend=('Total_Spend', 'sum')     # Total money in that specific cart
+    # Prepare data for Plotly
+    timeline_data = user_data.groupby(['InvoiceNo', 'InvoiceDate']).agg(
+        Items=('Quantity', 'sum'),
+        Spend=('Total_Spend', 'sum')
     ).reset_index()
-
-    # 2. CREATE THE INTERACTIVE TIMELINE (Your requested code)
+    
     fig = px.scatter(
-        user_sessions,
+        timeline_data,
         x='InvoiceDate',
-        y='Items_In_Cart',
-        size='Total_Spend',          # Bigger bubble = more money spent
-        color='Total_Spend',         # Color intensity = value
-        hover_data=['InvoiceNo', 'Total_Spend'],
-        title="User Shopping Activity Over Time",
-        labels={'Items_In_Cart': 'Cart Size (Items)', 'InvoiceDate': 'Date'},
+        y='Items',
+        size='Spend',
+        color='Spend',
+        title="Shopping Sessions (Bubble Size = Money Spent)",
         color_continuous_scale='Blues'
     )
-
-    # 3. CUSTOMIZE THE LOOK
-    fig.update_layout(
-        plot_bgcolor='rgba(0,0,0,0)', # Transparent background
-        xaxis_title="Timeline",
-        yaxis_title="Intensity (Items per Session)"
-    )
-
+    fig.update_layout(plot_bgcolor='rgba(0,0,0,0)')
     st.plotly_chart(fig, use_container_width=True)
 
 # --- RIGHT COLUMN: RECOMMENDATIONS ---
@@ -174,3 +163,74 @@ with col_right:
     
     except Exception as e:
         st.error(f"Could not generate recommendations: {e}")
+
+import streamlit as st
+import pandas as pd
+import time
+import plotly.express as px
+
+st.header("⚡ Live Session Simulator")
+
+# --- IMPROVED DATA SELECTION ---
+# Let's let the user pick who to simulate from the sidebar or a dropdown
+sim_user = st.selectbox("Pick a Customer to Simulate", available_users[:10])
+
+if st.button("🚀 Start Real-Time Simulation"):
+    # 1. Get data for this specific user
+    raw_session = df[df['CustomerID'] == sim_user].sort_values('InvoiceDate').copy()
+    
+    # 2. FIX: Add a 'Step' column so the chart moves even if the date is the same
+    raw_session['Step'] = range(1, len(raw_session) + 1)
+    
+    # 3. Setup UI placeholders
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        metric_box = st.empty()
+        risk_box = st.empty()
+    with col2:
+        chart_box = st.empty()
+
+    accumulated_data = pd.DataFrame()
+
+    # 4. The Loop
+    for i in range(len(raw_session)):
+        new_row = raw_session.iloc[[i]]
+        accumulated_data = pd.concat([accumulated_data, new_row])
+        
+        # Calculate stats for display
+        current_spend = accumulated_data['Total_Spend'].sum()
+        current_step = i + 1
+        
+        # Simulated AI Logic (Replace with your actual model prediction if ready)
+        # We simulate "Risk" increasing if they spend too much time (many steps) without a large purchase
+        risk_score = min(95, (current_step * 8) - (current_spend * 0.1))
+
+        # --- UPDATE UI ---
+        with metric_box:
+            st.metric("Items in Session", current_step)
+            st.metric("Projected Revenue", f"${current_spend:.2f}")
+
+        with risk_box:
+            if risk_score > 70:
+                st.error(f"Abandonment Risk: {risk_score:.1f}%")
+                st.warning("Action: Show 'Free Shipping' popup?")
+            else:
+                st.success(f"Abandonment Risk: {risk_score:.1f}%")
+
+        with chart_box:
+            # Use 'Step' on X-axis instead of 'InvoiceDate' to keep it moving
+            fig = px.line(
+                accumulated_data, 
+                x='Step', 
+                y='Total_Spend', 
+                title=f"Live Session Activity for User {sim_user}",
+                markers=True,
+                range_x=[0, len(raw_session)+1] # Keep the scale consistent
+            )
+            # Make it look "Techy"
+            fig.update_traces(line_color='#1f77b4', line_width=3)
+            st.plotly_chart(fig, use_container_width=True)
+
+        time.sleep(0.8) # Adjust speed of simulation
+
+    st.balloons()
