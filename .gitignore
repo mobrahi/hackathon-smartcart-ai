@@ -13,9 +13,10 @@ build/
 data/
 raw/
 processed/
-models/
-*.pkl
-*.joblib
+# models/
+#*.pkl
+#*.pickle
+#joblib
 *.h5
 *.pth
 *.pt

@@ -68,7 +68,7 @@ user_sim_df = pd.DataFrame(
 # ==========================================================
 # STEP 6: CREATE A PRODUCT LOOKUP DICTIONARY
 # ==========================================================
-# Member 2 will need this to convert '85123A' back to 'White T-Light Holder'
+# Will need this to convert '85123A' back to 'White T-Light Holder'
 product_descriptions = df_filtered.drop_duplicates('StockCode').set_index('StockCode')['Description'].to_dict()
 
 # ==========================================================
