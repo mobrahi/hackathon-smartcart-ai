@@ -21,7 +21,7 @@ Online retailers lose nearly 70% of potential revenue due to cart abandonment. *
 
 ## 🚀 Live Demo / Video
 
-[![Watch the video](assets/screenshot.png)](https://www.youtube.com/0tyZ6bO2QiQ)
+[![Watch the video](assets/screenshot.png)](https://www.youtube.com/watch?v=0tyZ6bO2QiQ)
 
 *Click the image above to watch the demo video.*
 
