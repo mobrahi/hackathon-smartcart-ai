@@ -21,7 +21,7 @@ Online retailers lose nearly 70% of potential revenue due to cart abandonment. *
 
 ## 🚀 Live Demo / Video
 
-[![Watch the video](assets/screenshot.png)](https://www.youtube.com/watch?v=YOUR_VIDEO_LINK_HERE)
+[![Watch the video](assets/screenshot.png)](https://www.youtube.com/0tyZ6bO2QiQ)
 
 *Click the image above to watch the demo video.*
 
@@ -159,3 +159,36 @@ This project was developed for a hackathon. Contributions, issues, and feature r
 ## 📄 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+## 👨‍💻 Author
+
+**Fairuz MFI**
+- GitHub: [@mobrahi](https://github.com/mobrahi)
+- Twitter: [@faairuz](https://twitter.com/faairuz)
+
+---
+
+## 🙏 Acknowledgments
+
+- **E-Commerce SMEs**: Inspired by the resilience of small-to-medium enterprises and the need to democratize enterprise-level AI tools for better customer retention.
+
+- **The Data Science Community**: Special thanks to the curators of the UCI Machine Learning Repository for providing the Online Retail Dataset that powered our model training.
+
+- **Open Source Giants**: Built with deep gratitude for the teams behind Streamlit, Scikit-Learn, and Pandas, whose tools make rapid AI prototyping possible.
+
+- **Hackathon Mentors**: Thanks to the organizers, mentors, lecturers and judges of NEXPERTS ACADEMY National Level AI Hackathon 2026 for providing the platform to bridge the gap between raw data and actionable business insights.
+
+- **Personal Note**: This project was a major milestone in my journey from Python fundamentals to building functional AI applications. It represents a hands-on exploration of how predictive modeling can solve real-world revenue leakage.
+
+---
+
+## ⭐ Support
+
+If you find this project helpful, please give it a ⭐ on GitHub!
+
+---
+
+**Made with ❤️ and Python**
+
